@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Star Rating</title>
+    <style>
+        .row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .star {
+            color: #d0d0d0;
+            font-size: 25px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .star::before {
+            content: "\2605";
+        }
+
+        .star.highlighted {
+            color: orange;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        html, body, .main {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <h2>Performance</h2>
+    <div class="row">
+        <button class="btn minus">-</button>
+        <div class="stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+        </div>
+        <button class="btn plus">+</button>
+    </div>
+
+    <h2>Security</h2>
+    <div class="row">
+        <button class="btn minus">-</button>
+        <div class="stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+        </div>
+        <button class="btn plus">+</button>
+    </div>
+
+    <h2>Code quality</h2>
+    <div class="row">
+        <button class="btn minus">-</button>
+        <div class="stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+        </div>
+        <button class="btn plus">+</button>
+    </div>
+
+    <div class="left">Stars left: <span></span></div>
+</div>
+
+<script>
+    const MAX_STARS = 6;
+
+    const rows = document.querySelectorAll('.row');
+    const left = document.querySelector('.left span');
+
+    let total = 0;
+    left.textContent = String(MAX_STARS);
+
+
+    rows.forEach(row => {
+        let stars = row.querySelectorAll('.star');
+        let count = 0;
+
+        row.querySelector('.plus').addEventListener('click', () => {
+            if (total >= 6) {
+                return;
+            }
+            if (count < 3) {
+                stars[count].classList.add('highlighted');
+                count++;
+                total++;
+                left.textContent = String(MAX_STARS - total);
+            }
+        });
+
+        row.querySelector('.minus').addEventListener('click', () => {
+            if (count > 0) {
+                count--;
+                stars[count].classList.remove('highlighted');
+                total--;
+                left.textContent = String(MAX_STARS - total);
+            }
+        });
+    });
+</script>
+</body>
+</html>
